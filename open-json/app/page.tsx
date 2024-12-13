@@ -76,7 +76,7 @@ export default function Home() {
         canSave={!!selectedFile}
       />
       <div className="flex flex-1 overflow-hidden">
-        <div className="w-1/4 border-r overflow-auto">
+        <div className="w-1/4 border-r border-white/20 overflow-auto">
           <FileExplorer rootDirectory={rootDirectory} onFileSelect={handleFileSelect} />
         </div>
         <div className="w-3/4">
