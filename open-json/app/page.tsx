@@ -1,10 +1,17 @@
 'use client'
-
 import { useState } from 'react'
 import FileExplorer from '@/components/FileExplorer'
 import JsonEditor from '@/components/JsonEditor'
 import Toolbar from '@/components/Toolbar'
 import { FileSystemDirectoryHandle, FileSystemFileHandle } from './types'
+
+// Extend window types to support showDirectoryPicker
+declare global {
+  interface Window {
+    showDirectoryPicker(): Promise<FileSystemDirectoryHandle>;
+    showSaveFilePicker(options: { types: { description: string, accept: Record<string, string[]> }[] }): Promise<FileSystemFileHandle>;
+  }
+}
 
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<FileSystemFileHandle | null>(null)
@@ -90,4 +97,3 @@ export default function Home() {
     </div>
   )
 }
-
