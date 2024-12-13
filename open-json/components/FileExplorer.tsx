@@ -89,7 +89,7 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ rootDirectory, onFileSelect
       {fileStructure ? (
         renderTree(fileStructure)
       ) : (
-        <div className="text-gray-500">No folder loaded. Use the "Load Folder" button to start.</div>
+        <div className="text-gray-500">No folder loaded. Use the &quot;Load Folder&quot; button to start.</div>
       )}
     </div>
   )
