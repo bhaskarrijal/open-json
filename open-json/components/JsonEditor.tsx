@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Editor, { Monaco } from '@monaco-editor/react'
+import { editor } from 'monaco-editor'
 
 interface JsonEditorProps {
   content: string
@@ -23,7 +24,7 @@ const JsonEditor: React.FC<JsonEditorProps> = ({ content, onChange, selectedFile
     }
   }
 
-  const handleEditorDidMount = (editor: any, monaco: Monaco) => {
+  const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
     monaco.editor.defineTheme('myCustomTheme', {
       base: 'vs-dark',
       inherit: true,
@@ -61,4 +62,3 @@ const JsonEditor: React.FC<JsonEditorProps> = ({ content, onChange, selectedFile
 }
 
 export default JsonEditor
-

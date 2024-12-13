@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { FaFolder, FaFolderOpen, FaFile } from 'react-icons/fa'
 import { FileSystemDirectoryHandle, FileSystemFileHandle } from '@/app/types'
 
@@ -19,13 +19,7 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ rootDirectory, onFileSelect
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set())
   const [fileStructure, setFileStructure] = useState<FileNode | null>(null)
 
-  useEffect(() => {
-    if (rootDirectory) {
-      buildFileStructure(rootDirectory).then(setFileStructure)
-    }
-  }, [rootDirectory])
-
-  const buildFileStructure = async (dirHandle: FileSystemDirectoryHandle): Promise<FileNode> => {
+  const buildFileStructure = useCallback(async (dirHandle: FileSystemDirectoryHandle): Promise<FileNode> => {
     const children: FileNode[] = []
     for await (const entry of dirHandle.values()) {
       if (entry.kind === 'directory') {
@@ -35,7 +29,13 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ rootDirectory, onFileSelect
       }
     }
     return { name: dirHandle.name, handle: dirHandle, children }
-  }
+  }, [])
+
+  useEffect(() => {
+    if (rootDirectory) {
+      buildFileStructure(rootDirectory).then(setFileStructure)
+    }
+  }, [rootDirectory, buildFileStructure])
 
   const toggleFolder = (path: string) => {
     setExpandedFolders((prev) => {
@@ -96,4 +96,3 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ rootDirectory, onFileSelect
 }
 
 export default FileExplorer
-
